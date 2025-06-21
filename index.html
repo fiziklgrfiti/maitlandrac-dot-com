@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maitland RAC - Reverse Advent Calendar Drive</title>
+    <title>Maitland RCA - Reverse Advent Calendar Drive</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Mountains+of+Christmas:wght@400;700&display=swap" rel="stylesheet">
@@ -202,9 +202,9 @@
         /* About Section */
         .about-content {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 200px;
             gap: 4rem;
-            align-items: center;
+            align-items: flex-start;
             margin-top: 2rem;
         }
 
@@ -234,7 +234,20 @@
             text-align: center;
             font-size: 8rem;
             color: #228b22;
-            animation: pulse 2s ease-in-out infinite;
+            position: sticky;
+            top: 150px;
+            align-self: flex-start;
+            transition: transform 0.1s ease;
+        }
+
+        .about-visual.shaking {
+            animation: gentleShake 0.8s ease-in-out infinite;
+        }
+
+        @keyframes gentleShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-3px); }
+            75% { transform: translateX(3px); }
         }
 
         @keyframes pulse {
@@ -397,6 +410,7 @@
 
             .about-visual {
                 font-size: 4rem;
+                position: static;
             }
 
             .section {
