@@ -257,6 +257,132 @@
             animation: gentleShake 0.6s ease-in-out infinite;
         }
 
+        /* Gallery Styles */
+        .gallery-section {
+            margin-top: 4rem;
+            padding: 3rem 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+        }
+
+        .gallery-heading {
+            text-align: center;
+            font-size: 2.2rem;
+            font-family: 'Mountains of Christmas', cursive;
+            color: #c41e3a;
+            margin-bottom: 2rem;
+        }
+
+        .carousel-container {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease;
+            touch-action: pan-y; /* Allow vertical scrolling on mobile */
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            position: relative;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .carousel-nav:hover {
+            background: rgba(0,0,0,0.8);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-nav.prev {
+            left: 15px;
+        }
+
+        .carousel-nav.next {
+            right: 15px;
+        }
+
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ccc;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-dot.active {
+            background: #c41e3a;
+            transform: scale(1.2);
+        }
+
+        .carousel-dot:hover {
+            background: #e74c3c;
+        }
+
+        @media (max-width: 768px) {
+            .carousel-slide img {
+                height: 250px;
+            }
+            
+            .carousel-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+            
+            .carousel-nav.prev {
+                left: 10px;
+            }
+            
+            .carousel-nav.next {
+                right: 10px;
+            }
+            
+            .gallery-heading {
+                font-size: 1.8rem;
+            }
+        }
+
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.1); }
@@ -524,6 +650,46 @@
                 📦
             </div>
         </div>
+        <!-- Gallery Section -->
+        <div class="gallery-section">
+            <h3 class="gallery-heading">🎄 Our 2024 Drive in Action! 🎄</h3>
+            <div class="carousel-container">
+                <div class="carousel-track" id="carouselTrack">
+                    <div class="carousel-slide">
+                        <img src="images/image (5).png" alt="Filled Christmas box with food items">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/image (4).png" alt="Room full of organized boxes">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/image.png" alt="Volunteer organizing boxes in garage">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/image (2).png" alt="Boxes arranged in Christmas tree shape">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/image (1).png" alt="Stacks of flat pack boxes ready for distribution">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/image (3).png" alt="Final view of all collected boxes">
+                    </div>
+                </div>
+                
+                <button class="carousel-nav prev" onclick="moveSlide(-1)">‹</button>
+                <button class="carousel-nav next" onclick="moveSlide(1)">›</button>
+                
+                <div class="carousel-indicators">
+                    <span class="carousel-dot active" onclick="currentSlide(1)"></span>
+                    <span class="carousel-dot" onclick="currentSlide(2)"></span>
+                    <span class="carousel-dot" onclick="currentSlide(3)"></span>
+                    <span class="carousel-dot" onclick="currentSlide(4)"></span>
+                    <span class="carousel-dot" onclick="currentSlide(5)"></span>
+                    <span class="carousel-dot" onclick="currentSlide(6)"></span>
+                    <span class="carousel-dot" onclick="currentSlide(7)"></span>
+                </div>
+            </div>
+        </div>
+        
     </section>
 
     <!-- FAQ Section -->
@@ -895,6 +1061,127 @@
                     setTimeout(() => createSparkle(), i * 100);
                 }
             });
+        });
+
+        // Box shaking animation on scroll - simplified and more visible
+        function handleBoxShake() {
+            const aboutVisual = document.querySelector('.about-visual');
+            
+            if (!aboutVisual) return;
+            
+            // Simple trigger: shake when scrolled past hero section
+            if (window.scrollY > 150) {
+                aboutVisual.classList.add('shaking');
+                console.log('Shaking started!'); // Debug log
+            } else {
+                aboutVisual.classList.remove('shaking');
+                console.log('Shaking stopped!'); // Debug log
+            }
+        }
+
+        // Add scroll listener for box shake
+        window.addEventListener('scroll', handleBoxShake);
+        
+        // Also check on page load
+        document.addEventListener('DOMContentLoaded', handleBoxShake);
+
+        // Carousel functionality
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const totalSlides = slides.length;
+        let autoSlideInterval;
+
+        function updateSlidePosition() {
+            const track = document.getElementById('carouselTrack');
+            if (!track) return;
+            
+            const translateX = -currentSlideIndex * 100;
+            track.style.transform = `translateX(${translateX}%)`;
+            
+            // Update indicators
+            document.querySelectorAll('.carousel-dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlideIndex);
+            });
+        }
+
+        function moveSlide(direction) {
+            currentSlideIndex += direction;
+            
+            if (currentSlideIndex >= totalSlides) {
+                currentSlideIndex = 0;
+            } else if (currentSlideIndex < 0) {
+                currentSlideIndex = totalSlides - 1;
+            }
+            
+            updateSlidePosition();
+            resetAutoSlide();
+        }
+
+        function currentSlide(index) {
+            currentSlideIndex = index - 1;
+            updateSlidePosition();
+            resetAutoSlide();
+        }
+
+        function autoSlide() {
+            moveSlide(1);
+        }
+
+        function startAutoSlide() {
+            if (totalSlides > 1) {
+                autoSlideInterval = setInterval(autoSlide, 4000); // 4 seconds
+            }
+        }
+
+        function resetAutoSlide() {
+            clearInterval(autoSlideInterval);
+            startAutoSlide();
+        }
+
+        // Touch/swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        function handleTouchStart(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        }
+
+        function handleTouchEnd(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const swipeDistance = touchEndX - touchStartX;
+            
+            if (Math.abs(swipeDistance) > swipeThreshold) {
+                if (swipeDistance > 0) {
+                    moveSlide(-1); // Swipe right - previous slide
+                } else {
+                    moveSlide(1); // Swipe left - next slide
+                }
+            }
+        }
+
+        // Initialize carousel when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            const carouselContainer = document.querySelector('.carousel-container');
+            if (carouselContainer && totalSlides > 0) {
+                // Add touch event listeners
+                carouselContainer.addEventListener('touchstart', handleTouchStart, { passive: true });
+                carouselContainer.addEventListener('touchend', handleTouchEnd, { passive: true });
+                
+                // Pause auto-slide on hover
+                carouselContainer.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
+                carouselContainer.addEventListener('mouseleave', startAutoSlide);
+                
+                // Start auto-slide
+                startAutoSlide();
+                
+                // Initialize first slide
+                updateSlidePosition();
+            }
         });
     </script>
 </body>
